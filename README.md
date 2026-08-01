@@ -8,7 +8,7 @@ l'Explorer, clic droit → **Copy AI Context**, colle dans ton IA préférée.
 
 ---
 
-## 🚀 Installation (2 minutes, aucune compilation nécessaire)
+##  Installation (2 minutes, aucune compilation nécessaire)
 
 ### Étape 1 — Télécharger l'extension
 
