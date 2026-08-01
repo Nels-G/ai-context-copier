@@ -10,6 +10,11 @@ on:
   # utile pour tester le build sans créer de vraie release.
   workflow_dispatch:
 
+# Nécessaire pour que le job puisse uploader le .vsix comme asset
+# de la release (sinon erreur "Resource not accessible by integration").
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +26,7 @@ jobs:
       - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Installer les dépendances
         run: npm ci
