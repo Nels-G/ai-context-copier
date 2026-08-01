@@ -1,0 +1,110 @@
+{
+  "name": "ai-context-copier",
+  "displayName": "AI Context Copier",
+  "description": "Copiez rapidement plusieurs fichiers formatés, prêts à être envoyés à une IA (ChatGPT, Claude, Gemini).",
+  "version": "0.1.0",
+  "publisher": "your-publisher-name",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "chatgpt",
+    "claude",
+    "gemini",
+    "clipboard",
+    "context"
+  ],
+  "icon": "resources/icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<ton-user>/ai-context-copier.git"
+  },
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aiContextCopier.copyContext",
+        "title": "Copy AI Context",
+        "icon": "$(copy)"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "aiContextCopier.copyContext",
+          "group": "6_copypath",
+          "when": "!explorerResourceIsRoot"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Context Copier",
+      "properties": {
+        "aiContextCopier.excludedPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "node_modules",
+            "dist",
+            "build",
+            ".git",
+            "out",
+            ".vscode"
+          ],
+          "description": "Motifs (glob) de fichiers ou dossiers à toujours exclure de la copie."
+        },
+        "aiContextCopier.includeLineNumbers": {
+          "type": "boolean",
+          "default": false,
+          "description": "Ajouter les numéros de ligne devant chaque ligne de contenu copiée."
+        },
+        "aiContextCopier.includeFileTree": {
+          "type": "boolean",
+          "default": false,
+          "description": "Ajouter l'arborescence du projet avant le contenu des fichiers."
+        },
+        "aiContextCopier.outputFormat": {
+          "type": "string",
+          "enum": [
+            "txt",
+            "markdown",
+            "xml",
+            "json"
+          ],
+          "default": "txt",
+          "description": "Format de sortie du texte copié. Seul 'txt' est implémenté pour le moment."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "npm run compile",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "lint": "eslint src --ext .ts",
+    "pretest": "npm run compile && npm run lint",
+    "package": "vsce package",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/vsce": "^2.24.0"
+  },
+  "dependencies": {
+    "minimatch": "^9.0.3"
+  }
+}

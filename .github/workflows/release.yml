@@ -1,0 +1,52 @@
+name: Build and attach VSIX
+
+# Se déclenche automatiquement quand tu publies une release sur GitHub
+# (Releases > Draft a new release > Publish release).
+on:
+  release:
+    types: [published]
+
+  # Permet aussi de le lancer manuellement depuis l'onglet Actions,
+  # utile pour tester le build sans créer de vraie release.
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérifier le typage
+        run: npx tsc --noEmit -p tsconfig.json
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Compiler l'extension
+        run: node esbuild.js --production
+
+      - name: Générer le fichier .vsix
+        run: npx vsce package --out ai-context-copier.vsix
+
+      - name: Attacher le .vsix à la release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ai-context-copier.vsix
+
+      - name: Conserver le .vsix comme artifact (si lancé manuellement)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-context-copier-vsix
+          path: ai-context-copier.vsix
