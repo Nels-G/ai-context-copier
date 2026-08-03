@@ -1,6 +1,26 @@
 # Changelog
 
+## [0.2.1]
+
+### Corrigé
+- Bug d'imbrication dans `walkDirectory` (`services/fileTree.ts`) : les
+  fichiers et sous-dossiers d'un dossier récursé apparaissaient tous
+  décalés après la liste complète de ses frères et sœurs, au lieu de
+  s'afficher juste sous leur propre dossier parent. Affectait aussi bien
+  `Copy Project Tree` que le réglage `includeFileTree`.
+
 Toutes les modifications notables de ce projet seront documentées dans ce fichier.
+## [0.2.0]
+
+### Ajouté
+- Nouvelle commande **Copy Project Tree** dans le menu contextuel de l'Explorer :
+  copie uniquement l'arborescence des fichiers/dossiers sélectionnés, affichée
+  depuis la racine du workspace, sans inclure le reste du projet
+  (`buildSelectionTree` dans `services/fileTree.ts`).
+
+### Modifié
+- `resolveSelection` factorisée dans `utils/workspace.ts`, réutilisée par
+  les deux commandes au lieu d'être dupliquée.
 
 ## [0.1.0] - Version initiale
 

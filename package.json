@@ -2,7 +2,7 @@
   "name": "ai-context-copier",
   "displayName": "AI Context Copier",
   "description": "Copiez rapidement plusieurs fichiers formatés, prêts à être envoyés à une IA (ChatGPT, Claude, Gemini).",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "publisher": "your-publisher-name",
   "engines": {
     "vscode": "^1.85.0"
@@ -22,7 +22,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/<ton-user>/ai-context-copier.git"
+    "url": "https://github.com/Nels-G/ai-context-copier.git"
   },
   "activationEvents": [],
   "main": "./dist/extension.js",
@@ -32,13 +32,23 @@
         "command": "aiContextCopier.copyContext",
         "title": "Copy AI Context",
         "icon": "$(copy)"
+      },
+      {
+        "command": "aiContextCopier.copyProjectTree",
+        "title": "Copy Project Tree",
+        "icon": "$(list-tree)"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "aiContextCopier.copyContext",
-          "group": "6_copypath",
+          "group": "6_copypath@1",
+          "when": "!explorerResourceIsRoot"
+        },
+        {
+          "command": "aiContextCopier.copyProjectTree",
+          "group": "6_copypath@2",
           "when": "!explorerResourceIsRoot"
         }
       ]

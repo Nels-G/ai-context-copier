@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { copyAiContextCommand } from "./commands/copyContext";
+import { copyProjectTreeCommand } from "./commands/copyTree";
 
 /**
  * Appelé par VS Code lors de l'activation de l'extension
@@ -7,13 +8,19 @@ import { copyAiContextCommand } from "./commands/copyContext";
  * ici automatiquement via la présence de la commande "onCommand").
  */
 export function activate(context: vscode.ExtensionContext): void {
-  const disposable = vscode.commands.registerCommand(
+  const copyContextDisposable = vscode.commands.registerCommand(
     "aiContextCopier.copyContext",
     (clickedUri: vscode.Uri | undefined, selectedUris: vscode.Uri[] | undefined) =>
       copyAiContextCommand(clickedUri, selectedUris)
   );
 
-  context.subscriptions.push(disposable);
+  const copyTreeDisposable = vscode.commands.registerCommand(
+    "aiContextCopier.copyProjectTree",
+    (clickedUri: vscode.Uri | undefined, selectedUris: vscode.Uri[] | undefined) =>
+      copyProjectTreeCommand(clickedUri, selectedUris)
+  );
+
+  context.subscriptions.push(copyContextDisposable, copyTreeDisposable);
 }
 
 /**

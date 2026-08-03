@@ -3,6 +3,7 @@ import { readSelectedFiles } from "../services/fileReader";
 import { buildOutput } from "../services/formatter";
 import { copyToClipboard } from "../services/clipboard";
 import { buildFileTree } from "../services/fileTree";
+import { resolveSelection } from "../utils/workspace";
 import { ExtensionConfig } from "../types";
 
 const CONFIG_SECTION = "aiContextCopier";
@@ -89,26 +90,4 @@ export async function copyAiContextCommand(
   vscode.window.showInformationMessage(
     `${count} file${count > 1 ? "s" : ""} copied successfully.`
   );
-}
-
-/**
- * Détermine la liste finale d'Uris à traiter, en tenant compte du fait
- * que VS Code peut fournir soit une multi-sélection (clic droit sur
- * un groupe sélectionné), soit un unique élément cliqué.
- *
- * On préserve l'ordre de sélection tel que fourni par VS Code.
- */
-function resolveSelection(
-  clickedUri: vscode.Uri | undefined,
-  selectedUris: vscode.Uri[] | undefined
-): vscode.Uri[] {
-  if (selectedUris && selectedUris.length > 0) {
-    return selectedUris;
-  }
-
-  if (clickedUri) {
-    return [clickedUri];
-  }
-
-  return [];
 }

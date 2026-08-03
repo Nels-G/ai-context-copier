@@ -113,6 +113,37 @@ Cela remplace automatiquement l'ancienne version.
 
 ---
 
+## 🌳 Copier uniquement l'arborescence (Copy Project Tree)
+
+Parfois tu veux juste montrer la **structure** d'une partie du projet à une
+IA, sans envoyer le contenu de chaque fichier. C'est fait pour ça.
+
+1. Sélectionne un ou plusieurs fichiers/dossiers dans l'Explorer.
+2. Clic droit → **Copy Project Tree**.
+3. Colle le résultat.
+
+Exemple : tu sélectionnes uniquement le dossier `src/` (pas `node_modules/`,
+pas `package.json`) → seul `src/` et son contenu apparaissent dans l'arbre,
+affiché depuis la racine du projet :
+
+\`\`\`text
+mon-projet/
+└── src/
+    ├── components/
+    │   └── Button.jsx
+    └── pages/
+        └── Home.jsx
+\`\`\`
+
+Contrairement au réglage `includeFileTree` (qui affiche l'arbre **complet**
+du workspace), cette commande ne montre que ce que tu as explicitement
+sélectionné — utile pour éviter que des dossiers volumineux mais non
+pertinents (`node_modules`, `.git`, etc.) n'encombrent le résultat, même
+s'ils ne sont pas dans tes exclusions configurées.
+
+Les patterns d'exclusion (`aiContextCopier.excludedPatterns`) restent
+appliqués **à l'intérieur** des dossiers sélectionnés.
+
 ## 🛠️ Pour les développeurs (modifier le code)
 
 Cette section ne concerne que si tu veux **modifier** l'extension elle-même.
